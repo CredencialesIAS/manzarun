@@ -51,7 +51,6 @@
             height: auto;
             margin-bottom: 25px;
             filter: drop-shadow(0px 4px 20px rgba(255, 255, 255, 0.15));
-            /* Fallback en caso de que tarde en cargar */
             min-height: 80px; 
         }
 
@@ -93,12 +92,11 @@
         .showcase {
             background-color: #000000;
             display: flex;
-            flex-direction: row; /* Estilo de computadora por defecto */
+            flex-direction: row;
             align-items: center;
             justify-content: center;
         }
 
-        /* Ventana donde se renderizan las playeras */
         .product-window {
             position: relative;
             width: 65vh;
@@ -120,13 +118,11 @@
             will-change: transform, opacity;
         }
 
-        /* Iniciamos con la del frente visible */
         .shirt-img.frente {
             opacity: 1;
             transform: scale(0.9);
         }
 
-        /* Capas de texto dinámicas */
         .text-layer {
             position: absolute;
             z-index: 3;
@@ -150,66 +146,252 @@
             font-size: clamp(0.9rem, 2.5vw, 1.05rem);
         }
 
-        /* Distribución inicial en pantallas grandes */
         #text-frente-1 { left: 8%; top: 38%; opacity: 1; transform: translateY(0); }
         #text-clasica  { right: 8%; top: 38%; }
         #text-frente-2 { left: 8%; top: 38%; }
         #text-metal    { right: 8%; top: 38%; }
 
-        /* --- FOOTER DE COMPRA --- */
-        .footer-zone {
-            background: radial-gradient(circle at bottom, #111111 0%, #000000 80%);
+
+        /* ==========================================================================
+           SECCIÓN DE TIENDA FINAL (ESTILO EDITORIAL MINIMALISTA / CAPTURA)
+           ========================================================================== */
+        .shop-section {
+            min-height: 100vh;
+            width: 100vw;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 80px 24px;
+            position: relative;
+        }
+
+        .shop-header {
+            margin-bottom: 60px;
             text-align: center;
         }
 
-        .footer-box {
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .footer-box h2 {
-            font-size: clamp(2.2rem, 7vw, 3.5rem);
+        .shop-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 900;
-            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: -1px;
+            margin-bottom: 8px;
         }
 
-        .footer-box p {
-            color: #666666;
-            margin-bottom: 35px;
-            font-size: clamp(0.95rem, 3vw, 1.1rem);
+        .shop-header p {
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.85rem;
         }
 
-        .btn-cta {
+        /* Cuadrícula de productos */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(300px, 450px));
+            gap: 40px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Tarjeta de Producto */
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            background-color: #000000;
+        }
+
+        /* Contenedor de Imagen */
+        .card-visual-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1.15;
+            background-color: #050505;
+            border: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Meta tags dentro de la tarjeta */
+        .card-meta-top {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .prod-id {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #666;
+        }
+
+        .color-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid #333;
+        }
+        .dot.white { background-color: #ffffff; }
+        .dot.black { background-color: #000000; border-color: #555; }
+
+        /* Imagen de la prenda en la tienda */
+        .card-img {
+            max-height: 85%;
+            max-width: 85%;
+            object-fit: contain;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        /* Toggles de Vista (Frente/Espalda) */
+        .view-toggles {
+            position: absolute;
+            bottom: 16px;
+            display: flex;
+            background: rgba(0, 0, 0, 0.75);
+            border: 1px solid #222;
+            padding: 3px;
+            z-index: 10;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #555;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            padding: 6px 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Detalles debajo del recuadro de imagen */
+        .card-details {
+            padding-top: 18px;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .card-details h3 {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .card-price {
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        /* Selección de Tallas */
+        .size-selector-box {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .size-label {
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            color: #666;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .sizes-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .size-btn {
+            background: none;
+            border: 1px solid #222;
+            color: #ffffff;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .size-btn:hover {
+            border-color: #666;
+        }
+
+        .size-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        /* Botón de Compra WhatsApp */
+        .btn-purchase {
+            margin-top: 24px;
+            width: 100%;
             background-color: #ffffff;
             color: #000000;
             border: none;
-            padding: 16px 48px;
-            font-size: 1rem;
+            padding: 14px;
+            font-size: 0.8rem;
             font-weight: 800;
-            border-radius: 50px;
-            cursor: pointer;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            cursor: pointer;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn-cta:hover {
-            transform: scale(1.05);
-            background-color: #f2f2f2;
-            box-shadow: 0px 15px 40px rgba(255, 255, 255, 0.2);
+        .btn-purchase:hover {
+            background-color: #e5e5e5;
+            transform: translateY(-2px);
         }
 
-        .btn-cta:active {
-            transform: scale(0.98);
+        .btn-purchase:active {
+            transform: translateY(0);
         }
+
 
         /* ==========================================================================
-           MEDIA QUERY: DISEÑO PREMIUM PARA MÓVILES (Celulares y Tablets en vertical)
+           MEDIA QUERIES: RESPONSIVO
            ========================================================================== */
         @media (max-width: 768px) {
             section {
@@ -217,12 +399,11 @@
             }
 
             .showcase {
-                flex-direction: column; /* Cambiamos a estructura vertical */
+                flex-direction: column;
                 justify-content: flex-start;
                 padding-top: 8vh;
             }
 
-            /* Redimensionamos la ventana del producto para que quepa arriba */
             .product-window {
                 width: 100vw;
                 height: 48vh;
@@ -237,7 +418,6 @@
                 transform: scale(0.95);
             }
 
-            /* Reposicionamos los textos abajo de la playera, centrados */
             .text-layer {
                 position: absolute;
                 bottom: 8vh;
@@ -261,11 +441,21 @@
                 max-width: 400px;
             }
             
-            /* Sincronizamos las posiciones por defecto del móvil */
             #text-frente-1 { opacity: 1; transform: translateY(0); }
             #text-clasica  { opacity: 0; transform: translateY(40px); }
             #text-frente-2 { opacity: 0; transform: translateY(40px); }
             #text-metal    { opacity: 0; transform: translateY(40px); }
+
+            /* Grid Móvil de Tienda */
+            .shop-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                padding: 0 10px;
+            }
+
+            .shop-section {
+                padding: 60px 16px;
+            }
         }
     </style>
 </head>
@@ -318,21 +508,186 @@
 
     </section>
 
-    <!-- 3. CIERRE DE LA EXPERIENCIA -->
-    <section class="footer-zone">
-        <div class="footer-box">
-            <h2>ÚNETE AL CLUB</h2>
-            <p>Disponibilidad limitada // Colección 2026</p>
-            <button class="btn-cta">Adquirir Merch</button>
+    <!-- 3. SECCIÓN DE TIENDA FINAL -->
+    <div class="shop-section">
+        <div class="shop-header">
+            <p>CONSIGUE EL DROP</p>
+            <h2>EDICIONES LIMITADAS</h2>
         </div>
-    </section>
+
+        <div class="shop-grid">
+            
+            <!-- TARJETA 1: T-Shirt Clásica -->
+            <div class="product-card" id="card-clasica">
+                <div class="card-visual-box">
+                    <div class="card-meta-top">
+                        <span class="prod-id">N°01</span>
+                        <div class="color-dots">
+                            <span class="dot white"></span>
+                            <span class="dot black"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Imagen Interactiva -->
+                    <img id="img-prod-1" src="tshirt-clasica-negra-frente.jpg" class="card-img" alt="T-Shirt Clásica" onerror="this.src='https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800'">
+                    
+                    <!-- Conmutador Frente / Espalda -->
+                    <div class="view-toggles">
+                        <button class="toggle-btn active" onclick="switchProductView(1, 'frente')">Frente</button>
+                        <button class="toggle-btn" onclick="switchProductView(1, 'espalda')">Espalda</button>
+                    </div>
+                </div>
+                
+                <div class="card-details">
+                    <h3>T-Shirt Clásica</h3>
+                    <span class="card-price">$350 MXN</span>
+                </div>
+
+                <!-- Selección de Talla -->
+                <div class="size-selector-box">
+                    <span class="size-label">TALLA</span>
+                    <div class="sizes-row">
+                        <button class="size-btn" onclick="selectSize(1, 'S')">S</button>
+                        <button class="size-btn active" onclick="selectSize(1, 'M')">M</button>
+                        <button class="size-btn" onclick="selectSize(1, 'L')">L</button>
+                        <button class="size-btn" onclick="selectSize(1, 'XL')">XL</button>
+                    </div>
+                </div>
+
+                <!-- Botón de compra directo -->
+                <button class="btn-purchase" onclick="checkoutProduct(1)">
+                    Purchase via WhatsApp
+                </button>
+            </div>
+
+            <!-- TARJETA 2: T-Shirt Metal Core -->
+            <div class="product-card" id="card-metal">
+                <div class="card-visual-box">
+                    <div class="card-meta-top">
+                        <span class="prod-id">N°02</span>
+                        <div class="color-dots">
+                            <span class="dot white"></span>
+                            <span class="dot black"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Imagen Interactiva -->
+                    <img id="img-prod-2" src="tshirt-clasica-negra-frente.jpg" class="card-img" alt="T-Shirt Metal" onerror="this.src='https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800'">
+                    
+                    <!-- Conmutador Frente / Espalda -->
+                    <div class="view-toggles">
+                        <button class="toggle-btn active" onclick="switchProductView(2, 'frente')">Frente</button>
+                        <button class="toggle-btn" onclick="switchProductView(2, 'espalda')">Espalda</button>
+                    </div>
+                </div>
+                
+                <div class="card-details">
+                    <h3>T-Shirt Metal Core</h3>
+                    <span class="card-price">$350 MXN</span>
+                </div>
+
+                <!-- Selección de Talla -->
+                <div class="size-selector-box">
+                    <span class="size-label">TALLA</span>
+                    <div class="sizes-row">
+                        <button class="size-btn" onclick="selectSize(2, 'S')">S</button>
+                        <button class="size-btn active" onclick="selectSize(2, 'M')">M</button>
+                        <button class="size-btn" onclick="selectSize(2, 'L')">L</button>
+                        <button class="size-btn" onclick="selectSize(2, 'XL')">XL</button>
+                    </div>
+                </div>
+
+                <!-- Botón de compra directo -->
+                <button class="btn-purchase" onclick="checkoutProduct(2)">
+                    Purchase via WhatsApp
+                </button>
+            </div>
+
+        </div>
+    </div>
 
     <!-- MOTOR DE ANIMACIÓN Y COMPORTAMIENTOS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script>
-        // Esperamos a que el DOM esté completamente cargado
+        // Inicialización de tallas seleccionadas por defecto en memoria
+        const selectedSizes = {
+            1: "M",
+            2: "M"
+        };
+
+        // Rutas dinámicas para la interactividad de las tarjetas
+        const productImages = {
+            1: {
+                frente: "tshirt-clasica-negra-frente.jpg",
+                espalda: "tshirt-clasica-negra-espalda.jpg"
+            },
+            2: {
+                frente: "tshirt-clasica-negra-frente.jpg",
+                espalda: "tshirt-metal-negra-espalda.jpg"
+            }
+        };
+
+        // Función para cambiar de vista Frente/Espalda de forma independiente
+        function switchProductView(productId, view) {
+            const card = productId === 1 ? document.getElementById('card-clasica') : document.getElementById('card-metal');
+            const imgElement = document.getElementById(`img-prod-${productId}`);
+            const buttons = card.querySelectorAll('.toggle-btn');
+            
+            // Actualizar botones de vista
+            buttons.forEach(btn => {
+                if (btn.textContent.toLowerCase() === view) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Animación suave de transición de imagen
+            imgElement.style.opacity = '0';
+            imgElement.style.transform = 'scale(0.9)';
+            
+            setTimeout(() => {
+                imgElement.src = productImages[productId][view];
+                imgElement.style.opacity = '1';
+                imgElement.style.transform = 'scale(1)';
+            }, 250);
+        }
+
+        // Función para seleccionar la talla de forma dinámica
+        function selectSize(productId, size) {
+            selectedSizes[productId] = size;
+            const card = productId === 1 ? document.getElementById('card-clasica') : document.getElementById('card-metal');
+            const sizeButtons = card.querySelectorAll('.size-btn');
+            
+            sizeButtons.forEach(btn => {
+                if (btn.textContent === size) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // Función para enviar mensaje pre-configurado de compra directa por WhatsApp
+        function checkoutProduct(productId) {
+            const productName = productId === 1 ? "T-Shirt Clásica" : "T-Shirt Metal Core";
+            const size = selectedSizes[productId];
+            const price = "$350 MXN";
+            
+            // Mensaje optimizado para la marca
+            const rawMessage = `¡Hola Manza Run Club! Me interesa adquirir la ${productName} en Talla ${size}. ¿Tienen disponibilidad en stock? ⚡`;
+            const encodedMessage = encodeURIComponent(rawMessage);
+            
+            // URL Oficial de redirección de WhatsApp (Número de ejemplo, puedes cambiarlo por el tuyo)
+            const whatsappUrl = `https://wa.me/5211234567890?text=${encodedMessage}`;
+            
+            // Abrir en nueva ventana de forma limpia
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Esperamos a que el DOM esté completamente cargado para GSAP y Lenis
         window.addEventListener('DOMContentLoaded', () => {
 
             // 1. Inicialización de Scroll Suave (Lenis) - Optimizado para móvil y escritorio
@@ -341,7 +696,7 @@
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
                 gestureOrientation: 'vertical',
                 smoothWheel: true,
-                touchMultiplier: 1.5 // Mejora el deslizamiento en pantallas táctiles
+                touchMultiplier: 1.5
             });
 
             function raf(time) {
@@ -356,20 +711,19 @@
             // 3. Adaptabilidad dinámica para variables de animación basadas en el viewport
             let isMobile = window.innerWidth <= 768;
             
-            // Re-evaluar ancho si cambia la orientación del teléfono
             window.addEventListener('resize', () => {
                 isMobile = window.innerWidth <= 768;
             });
 
-            // 4. Línea de tiempo maestra con Pinning extendido
+            // 4. Línea de tiempo maestra con Pinning extendido para la secuencia cinemática
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".showcase",
                     start: "top top",
-                    end: "+=4500", // Distancia total de scroll para la experiencia
-                    scrub: 1.2,    // Efecto elástico de respuesta
-                    pin: true,     // Congela la pantalla
-                    invalidateOnRefresh: true // Recalcula si el usuario gira el celular
+                    end: "+=4500",
+                    scrub: 1.2,
+                    pin: true,
+                    invalidateOnRefresh: true
                 }
             });
 
@@ -402,7 +756,7 @@
               .to(".espalda-metal", { opacity: 1, scale: isMobile ? 0.95 : 1.05 }, "fase4")
               .to("#text-metal", { opacity: 1, y: 0 }, "fase4+=0.2")
 
-            // Pequeña pausa final para apreciar la edición Metal antes de liberar el scroll
+            // Pequeña pausa final antes de liberar el scroll
               .to({}, { duration: 0.6 });
         });
     </script>
