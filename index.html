@@ -34,7 +34,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none; /* Para no bloquear clics durante la salida */
+            pointer-events: none;
         }
 
         .loader-content {
@@ -44,9 +44,8 @@
             gap: 30px;
         }
 
-        /* Logo dando vueltas (Tamaño ajustable) */
         .loader-logo {
-            width: 100px; /* Tamaño del logo en la carga */
+            width: 80px;
             height: auto;
             animation: spin 2s linear infinite;
             z-index: 10000;
@@ -81,10 +80,37 @@
             padding: 20px;
         }
 
-        /* --- HERO SECTION --- */
+        /* ==========================================================================
+           HERO SECTION CON VIDEO DE FONDO
+           ========================================================================== */
         .hero {
             text-align: center;
-            background: radial-gradient(circle at center, #111111 0%, #000000 80%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 0;
+            filter: grayscale(80%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 80%, #000000 100%);
+            z-index: 1;
         }
 
         .hero-content {
@@ -93,13 +119,19 @@
             align-items: center;
             justify-content: center;
             max-width: 90%;
+            position: relative;
+            z-index: 2;
         }
 
         .club-logo {
-            max-width: 140px; /* Tamaño final en la página */
+            position: absolute; /* Aquí está el cambio para que se quede arriba y suba con el scroll */
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 140px;
             width: 100%;
             height: auto;
-            margin-bottom: 25px;
+            z-index: 1000;
             filter: drop-shadow(0px 4px 20px rgba(255, 255, 255, 0.15));
             min-height: 80px; 
         }
@@ -119,13 +151,13 @@
         .tagline {
             font-size: clamp(0.8rem, 3vw, 1.1rem);
             letter-spacing: 5px;
-            color: #888888;
+            color: #aaaaaa;
             text-transform: uppercase;
             font-weight: 500;
         }
 
         .scroll-down {
-            color: #555555;
+            color: #888888;
             font-size: 0.85rem;
             margin-top: 60px;
             letter-spacing: 2px;
@@ -138,7 +170,7 @@
             50% { opacity: 1; transform: translateY(6px); }
         }
 
-        /* --- SHOWCASE AREA (ESTILO APPLE ADAPTATIVO) --- */
+        /* --- SHOWCASE AREA --- */
         .showcase {
             background-color: #000000;
             display: flex;
@@ -202,9 +234,7 @@
         #text-metal    { right: 8%; top: 38%; }
 
 
-        /* ==========================================================================
-           SECCIÓN DE TIENDA FINAL
-           ========================================================================== */
+        /* --- SECCIÓN DE TIENDA FINAL --- */
         .shop-section {
             min-height: 100vh;
             width: 100vw;
@@ -277,13 +307,7 @@
             z-index: 10;
         }
 
-        .prod-id {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #666;
-        }
-
+        .prod-id { font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; color: #666; }
         .color-dots { display: flex; gap: 6px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #333; }
         .dot.white { background-color: #ffffff; }
@@ -308,26 +332,13 @@
         }
 
         .toggle-btn {
-            background: none;
-            border: none;
-            color: #555;
-            font-size: 0.65rem;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            padding: 6px 12px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.2s ease;
+            background: none; border: none; color: #555; font-size: 0.65rem; font-weight: 800;
+            letter-spacing: 1.5px; padding: 6px 12px; cursor: pointer; text-transform: uppercase; transition: all 0.2s ease;
         }
         .toggle-btn.active { background-color: #ffffff; color: #000000; }
 
         .card-details {
-            padding-top: 18px;
-            border-bottom: 1px solid #1a1a1a;
-            padding-bottom: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
+            padding-top: 18px; border-bottom: 1px solid #1a1a1a; padding-bottom: 14px; display: flex; justify-content: space-between; align-items: baseline;
         }
         .card-details h3 { font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 800; letter-spacing: -0.5px; text-transform: uppercase; }
         .card-price { font-size: clamp(0.95rem, 1.8vw, 1.1rem); font-weight: 700; color: #ffffff; letter-spacing: -0.5px; }
@@ -365,6 +376,7 @@
             .shop-grid { grid-template-columns: 1fr; gap: 50px; padding: 0 10px; }
             .shop-section { padding: 60px 16px; }
         }
+        
     </style>
 </head>
 <body>
@@ -372,21 +384,24 @@
     <!-- PANTALLA DE CARGA -->
     <div id="loader" class="loader-container">
         <div class="loader-content" id="loader-content-box">
-            <!-- Logo giratorio -->
             <img src="logomz.png" alt="Cargando..." class="loader-logo" id="anim-logo" onerror="this.style.display='none'">
-            
-            <!-- Barra de Progreso -->
             <div class="progress-bar-container" id="bar-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
         </div>
     </div>
 
-    <!-- 1. HERO / INTRODUCCIÓN -->
+    <!-- LOGO PRINCIPAL (Fuera del hero, con position absolute) -->
+    <img src="logomz.png" alt="Manza Run Club Logo" class="club-logo" id="main-logo" onerror="this.style.display='none'">
+
+    <!-- 1. HERO / INTRODUCCIÓN CON VIDEO CINEMÁTICO -->
     <section class="hero">
+        <video class="hero-video-bg" autoplay loop muted playsinline>
+            <source src="https://videos.pexels.com/video-files/3255275/3255275-uhd_2560_1440_25fps.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+
         <div class="hero-content">
-            <img src="logomz.png" alt="Manza Run Club Logo" class="club-logo" id="main-logo" onerror="this.style.display='none'">
-            <!-- Textos a revelar -->
             <p class="tagline hero-anim-text">MANZA RUN CLUB // DROP 01</p>
             <h1 class="hero-anim-text">NEVER STOP<br>RUNNING</h1>
             <p class="scroll-down hero-anim-text">Desplaza para inspeccionar ↓</p>
@@ -482,12 +497,15 @@
         </div>
     </div>
 
-    <!-- MOTOR DE ANIMACIÓN -->
+    <!-- MOTOR DE ANIMACIÓN Y LIBRERÍAS (Desde CDNs para evitar descargar archivos locales) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     
     <script>
+        // Declaramos Lenis globalmente para poder pausarlo/reiniciarlo en cualquier lugar
+        let lenis;
+
         const selectedSizes = { 1: "M", 2: "M" };
         const productImages = {
             1: { frente: "tshirt-clasica-negra-frente.jpg", espalda: "tshirt-clasica-negra-espalda.jpg" },
@@ -532,39 +550,33 @@
             const loaderBg = document.getElementById('loader');
             const heroTexts = document.querySelectorAll('.hero-anim-text');
             
-            // 1. Preparar la escena: Ocultar textos y el logo final
             gsap.set(heroTexts, { opacity: 0, y: 30 });
             gsap.set(mainLogo, { opacity: 0 });
 
-            // 2. Línea de tiempo de la animación
             const loadTl = gsap.timeline({
                 onComplete: () => {
-                    // Limpieza cuando termina todo
                     loaderBg.style.display = 'none';
-                    gsap.set(mainLogo, { opacity: 1 }); // Activamos el logo real
-                    animLogo.style.display = 'none'; // Escondemos el del cargador
+                    gsap.set(mainLogo, { opacity: 1 });
+                    animLogo.style.display = 'none';
+                    // REACTIVAMOS EL SCROLL AL TERMINAR LA ANIMACIÓN
+                    if (lenis) lenis.start(); 
                 }
             });
 
-            // Llenar barra
             loadTl.to("#progress-bar", {
                 width: "100%",
                 duration: 1.2,
                 ease: "expo.inOut"
             })
-            // Desvanecer contenedor de la barra
             .to("#bar-container", {
                 opacity: 0,
                 duration: 0.3
             });
 
-            // Calcular y ejecutar el vuelo del logo
             loadTl.add(() => {
-                // Obtener posiciones exactas en pantalla
                 const startRect = animLogo.getBoundingClientRect();
                 const targetRect = mainLogo.getBoundingClientRect();
                 
-                // Fijar el logo animado exactamente donde está flotando ahora
                 gsap.set(animLogo, {
                     position: 'fixed',
                     left: startRect.left,
@@ -572,33 +584,30 @@
                     width: startRect.width,
                     height: startRect.height,
                     margin: 0,
-                    animation: 'none' // Detener el giro infinito en CSS
+                    animation: 'none' 
                 });
 
-                // Moverlo a la posición del logo del Hero
                 gsap.to(animLogo, {
                     left: targetRect.left,
                     top: targetRect.top,
                     width: targetRect.width,
                     height: targetRect.height,
-                    rotation: 360, // Da una última vuelta mientras sube y queda derecho
+                    rotation: 360, 
                     duration: 1.2,
                     ease: "power3.inOut"
                 });
             });
 
-            // Desvanecer el fondo negro de la pantalla de carga para revelar la página
             loadTl.to(loaderBg, {
                 backgroundColor: "rgba(0,0,0,0)",
                 duration: 1
             }, "+=0.2")
             
-            // Hacer que los textos (Drop 01, Never Stop Running, etc) fluyan hacia arriba
             .to(heroTexts, {
                 opacity: 1,
                 y: 0,
                 duration: 0.8,
-                stagger: 0.2, // Cada texto aparece con un ligero retraso uno tras otro
+                stagger: 0.2, 
                 ease: "power2.out"
             }, "-=0.6");
         });
@@ -607,9 +616,13 @@
         // SCROLL INTERACTIVO (SHOWCASE)
         // =========================================================================
         window.addEventListener('DOMContentLoaded', () => {
-            const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), gestureOrientation: 'vertical', smoothWheel: true, touchMultiplier: 1.5 });
+            // INICIALIZAMOS LENIS Y LO PAUSAMOS INMEDIATAMENTE
+            lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), gestureOrientation: 'vertical', smoothWheel: true, touchMultiplier: 1.5 });
+            lenis.stop(); 
+            
             function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
             requestAnimationFrame(raf);
+            
             gsap.registerPlugin(ScrollTrigger);
 
             let isMobile = window.innerWidth <= 768;
